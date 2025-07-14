@@ -155,6 +155,145 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/07/14/TD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/07/14/TD/" class="post-title-link" itemprop="url">TD</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-07-14 22:58:34" itemprop="dateCreated datePublished" datetime="2025-07-14T22:58:34+08:00">2025-07-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-07-15 00:37:12" itemprop="dateModified" datetime="2025-07-15T00:37:12+08:00">2025-07-15</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Temporal-Difference-Learning"><a href="#Temporal-Difference-Learning" class="headerlink" title="Temporal-Difference Learning"></a>Temporal-Difference Learning</h1><h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h2><p>TD Learning 也是一种 <strong>model-free</strong> 算法，<strong>核心思想是：用“部分实际回报 + 自身的估计”来更新对状态或动作价值的估计。</strong></p>
+<p>⚠️ 这里的 TD 算法只能估计在给定 policy 下的 <strong>State Value</strong></p>
+<p>数据形式：$(s_0,r_1,s_1,…,s_t,r_{t+1},s_{t+1}…)$，其中 $s_t$ 表示状态，$r_t$ 表示奖励，$s_{t+1}$ 表示下一个状态，因此可以得到 TD 公式：</p>
+<img src="/Users/liam/Library/Application Support/typora-user-images/image-20250624024725653.png" alt="image-20250624024725653" style="zoom:55%;" />
+
+<p>具体而言，**<u>新的估计</u><strong>由</strong><u>旧的估计</u><strong>和</strong><u>修正项</u>**组成，即：</p>
+<img src="/Users/liam/Library/Application Support/typora-user-images/image-20250624025433638.png" alt="image-20250624025433638" style="zoom:50%;" />
+
+<p>其中，</p>
+<ul>
+<li><strong>TD Target：</strong>“当前奖励 + 下一个状态的估值”，用它来作为对当前状态价值 $v(s_t)$ 的新目标。</li>
+</ul>
+<img src="/Users/liam/Library/Application Support/typora-user-images/image-20250624025624752.png" alt="image-20250624025624752" style="zoom:50%;" />
+
+<p>​	**意义：**表明下一个时刻 $v_{t+1}$ 相比 $v_t$ 离 $\bar{v_t}$ 更近，因此这个算法是将 $v(s_t)$ 朝着 $\bar{v}(t)$ 的方向去改进。</p>
+<img src="/Users/liam/Library/Application Support/typora-user-images/image-20250624033952707.png" alt="image-20250624033952707" style="zoom:33%;" />
+
+<ul>
+<li>**TD Error：**这里能够很好地解释什么是时序差分，即 $v(s_t)$ 是在 $t$ 时刻，而 $\bar{v}_t$ 是在 $t+1$ 时刻；此外，TD Error 不仅反应了 $v(s_t)$ 和 $\bar{v}<em>t$ 之间的误差，还反应了 $v_t$ (当前估计值) 和 $v</em>{\pi}$ (我们要估计的值) 之间的差值。因为如果 $\delta_t &#x3D; 0$，说明你当前的价值估计与一步 TD target 完全一致。</li>
+</ul>
+<img src="/Users/liam/Library/Application Support/typora-user-images/image-20250624025714639.png" alt="image-20250624025714639" style="zoom:50%;" />
+
+<h2 id="2-Main-Idea"><a href="#2-Main-Idea" class="headerlink" title="2. Main Idea"></a>2. Main Idea</h2><ul>
+<li><strong>核心</strong>：在没有模型的情况下来求解贝尔曼公式，即 $v_\pi(s)$</li>
+<li><strong>本质</strong>：<u>使用 RM 算法求解下面的贝尔曼方程</u></li>
+</ul>
+<ol>
+<li>在贝尔曼方程中：</li>
+</ol>
+<img src="/Users/liam/Library/Application Support/typora-user-images/image-20250625032822942.png" alt="image-20250625032822942" style="zoom:50%;" />
+
+<ol start="2">
+<li>回顾 RM 算法，对于想求解的方程 $g(w)&#x3D;0$，可以使用：</li>
+</ol>
+<img src="/Users/liam/Library/Application Support/typora-user-images/image-20250623025604905.png" alt="image-20250623025604905" style="zoom:33%;" />
+
+<ol start="3">
+<li><p>对贝尔曼方程构造成 RM 形式：</p>
+<img src="/Users/liam/Library/Application Support/typora-user-images/image-20250628030157116.png" alt="image-20250628030157116" style="zoom:33%;" />
+
+<p>因此得到：</p>
+<img src="/Users/liam/Library/Application Support/typora-user-images/image-20250628033726952.png" alt="image-20250628033726952" style="zoom:40%;" />
+
+<p>但是 RM 算法中原本有两个假设，在此处需要修改：</p>
+<ul>
+<li><strong>原假设 1</strong>：采样对是 ${(s, r, s’)}$，即每次独立采样。</li>
+<li><strong>修改 1</strong>：改为 ${(s_t, r_{t+1}, s_{t+1})}$，即从一条完整的 episode 中顺序采集样本，这样可以利用序列数据，而不是每次都独立采样。</li>
+<li><strong>原假设 2</strong>：$v_\pi(s’)$ 是已知的真实值。</li>
+<li><strong>修改 2</strong>：实际中我们并不知道 $v_\pi(s’)$ 的真实值，只能用当前的估计值来代替（即 $v_k(s’)$）。</li>
+</ul>
+</li>
+<li><p>关系和对比</p>
+</li>
+</ol>
+<img src="/Users/liam/Library/Application Support/typora-user-images/image-20250628040832622.png" alt="image-20250628040832622" style="zoom:33%;" />
+
+<img src="/Users/liam/Library/Application Support/typora-user-images/image-20250628040931872.png" alt="image-20250628040931872" style="zoom:33%;" />
+
+
+
+
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://example.com/2025/07/14/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -183,9 +322,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2025-07-14 22:58:34 / Modified: 22:59:37" itemprop="dateCreated datePublished" datetime="2025-07-14T22:58:34+08:00">2025-07-14</time>
+      <time title="Created: 2025-07-14 22:58:34" itemprop="dateCreated datePublished" datetime="2025-07-14T22:58:34+08:00">2025-07-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-07-15 00:36:59" itemprop="dateModified" datetime="2025-07-15T00:36:59+08:00">2025-07-15</time>
     </span>
 
   
@@ -280,145 +425,6 @@
 <h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/05/14/TD/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/05/14/TD/" class="post-title-link" itemprop="url">Untitled</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2024-05-14 19:15:27" itemprop="dateCreated datePublished" datetime="2024-05-14T19:15:27+08:00">2024-05-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-06-29 03:43:45" itemprop="dateModified" datetime="2025-06-29T03:43:45+08:00">2025-06-29</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Temporal-Difference-Learning"><a href="#Temporal-Difference-Learning" class="headerlink" title="Temporal-Difference Learning"></a>Temporal-Difference Learning</h1><h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h2><p>TD Learning 也是一种 <strong>model-free</strong> 算法，<strong>核心思想是：用“部分实际回报 + 自身的估计”来更新对状态或动作价值的估计。</strong></p>
-<p>⚠️ 这里的 TD 算法只能估计在给定 policy 下的 <strong>State Value</strong></p>
-<p>数据形式：$(s_0,r_1,s_1,…,s_t,r_{t+1},s_{t+1}…)$，其中 $s_t$ 表示状态，$r_t$ 表示奖励，$s_{t+1}$ 表示下一个状态，因此可以得到 TD 公式：</p>
-<img src="/Users/liam/Library/Application Support/typora-user-images/image-20250624024725653.png" alt="image-20250624024725653" style="zoom:55%;" />
-
-<p>具体而言，**<u>新的估计</u><strong>由</strong><u>旧的估计</u><strong>和</strong><u>修正项</u>**组成，即：</p>
-<img src="/Users/liam/Library/Application Support/typora-user-images/image-20250624025433638.png" alt="image-20250624025433638" style="zoom:50%;" />
-
-<p>其中，</p>
-<ul>
-<li><strong>TD Target：</strong>“当前奖励 + 下一个状态的估值”，用它来作为对当前状态价值 $v(s_t)$ 的新目标。</li>
-</ul>
-<img src="/Users/liam/Library/Application Support/typora-user-images/image-20250624025624752.png" alt="image-20250624025624752" style="zoom:50%;" />
-
-<p>​	**意义：**表明下一个时刻 $v_{t+1}$ 相比 $v_t$ 离 $\bar{v_t}$ 更近，因此这个算法是将 $v(s_t)$ 朝着 $\bar{v}(t)$ 的方向去改进。</p>
-<img src="/Users/liam/Library/Application Support/typora-user-images/image-20250624033952707.png" alt="image-20250624033952707" style="zoom:33%;" />
-
-<ul>
-<li>**TD Error：**这里能够很好地解释什么是时序差分，即 $v(s_t)$ 是在 $t$ 时刻，而 $\bar{v}_t$ 是在 $t+1$ 时刻；此外，TD Error 不仅反应了 $v(s_t)$ 和 $\bar{v}<em>t$ 之间的误差，还反应了 $v_t$ (当前估计值) 和 $v</em>{\pi}$ (我们要估计的值) 之间的差值。因为如果 $\delta_t &#x3D; 0$，说明你当前的价值估计与一步 TD target 完全一致。</li>
-</ul>
-<img src="/Users/liam/Library/Application Support/typora-user-images/image-20250624025714639.png" alt="image-20250624025714639" style="zoom:50%;" />
-
-<h2 id="2-Main-Idea"><a href="#2-Main-Idea" class="headerlink" title="2. Main Idea"></a>2. Main Idea</h2><ul>
-<li><strong>核心</strong>：在没有模型的情况下来求解贝尔曼公式，即 $v_\pi(s)$</li>
-<li><strong>本质</strong>：<u>使用 RM 算法求解下面的贝尔曼方程</u></li>
-</ul>
-<ol>
-<li>在贝尔曼方程中：</li>
-</ol>
-<img src="/Users/liam/Library/Application Support/typora-user-images/image-20250625032822942.png" alt="image-20250625032822942" style="zoom:50%;" />
-
-<ol start="2">
-<li>回顾 RM 算法，对于想求解的方程 $g(w)&#x3D;0$，可以使用：</li>
-</ol>
-<img src="/Users/liam/Library/Application Support/typora-user-images/image-20250623025604905.png" alt="image-20250623025604905" style="zoom:33%;" />
-
-<ol start="3">
-<li><p>对贝尔曼方程构造成 RM 形式：</p>
-<img src="/Users/liam/Library/Application Support/typora-user-images/image-20250628030157116.png" alt="image-20250628030157116" style="zoom:33%;" />
-
-<p>因此得到：</p>
-<img src="/Users/liam/Library/Application Support/typora-user-images/image-20250628033726952.png" alt="image-20250628033726952" style="zoom:40%;" />
-
-<p>但是 RM 算法中原本有两个假设，在此处需要修改：</p>
-<ul>
-<li><strong>原假设 1</strong>：采样对是 ${(s, r, s’)}$，即每次独立采样。</li>
-<li><strong>修改 1</strong>：改为 ${(s_t, r_{t+1}, s_{t+1})}$，即从一条完整的 episode 中顺序采集样本，这样可以利用序列数据，而不是每次都独立采样。</li>
-<li><strong>原假设 2</strong>：$v_\pi(s’)$ 是已知的真实值。</li>
-<li><strong>修改 2</strong>：实际中我们并不知道 $v_\pi(s’)$ 的真实值，只能用当前的估计值来代替（即 $v_k(s’)$）。</li>
-</ul>
-</li>
-<li><p>关系和对比</p>
-</li>
-</ol>
-<img src="/Users/liam/Library/Application Support/typora-user-images/image-20250628040832622.png" alt="image-20250628040832622" style="zoom:33%;" />
-
-<img src="/Users/liam/Library/Application Support/typora-user-images/image-20250628040931872.png" alt="image-20250628040931872" style="zoom:33%;" />
-
-
-
-
-
-
-
 
       
     </div>
