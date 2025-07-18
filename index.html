@@ -201,7 +201,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-07-19 01:01:17" itemprop="dateModified" datetime="2025-07-19T01:01:17+08:00">2025-07-19</time>
+      <time title="修改时间：2025-07-19 01:53:33" itemprop="dateModified" datetime="2025-07-19T01:53:33+08:00">2025-07-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -275,7 +275,7 @@
 <td><strong>数学表达</strong></td>
 <td>$r_{t+1}$</td>
 <td>$G_t &#x3D; r_{t+1} + \gamma r_{t+2} + \gamma^2 r_{t+3} + \cdots$</td>
-<td>$V^\pi(s) &#x3D; \mathbb{E}_\pi[G_t</td>
+<td>$V^\pi(s) &#x3D; \mathbb{E}_\pi[G_t \mid s_t &#x3D; s]$</td>
 </tr>
 <tr>
 <td><strong>作用范围</strong></td>
@@ -299,7 +299,7 @@
 <td><strong>举例</strong></td>
 <td>当前位置走一步，得到 $-1$</td>
 <td>迷宫从起点出发本轮累计得分 $G_0&#x3D;81$</td>
-<td>起点采用策略$\pi$平均每次能拿 $V^\pi(s_0)&#x3D;82$</td>
+<td>起点采用策略 $\pi$ 平均每次能拿 $V^\pi(s_0)&#x3D;82$</td>
 </tr>
 <tr>
 <td><strong>强化学习目标</strong></td>
@@ -308,6 +308,7 @@
 <td><strong>最终优化目标：最大化价值函数（即最大化期望回报）</strong></td>
 </tr>
 </tbody></table>
+<p><strong>总结：奖励是单步反馈，回报是一条轨迹的累计奖励，价值函数是回报的期望值，也是强化学习要优化的目标。</strong></p>
 
       
     </div>
