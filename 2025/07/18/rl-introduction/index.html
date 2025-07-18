@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://example.com/2025/07/18/rl-introduction/image-20250718024647167.png">
 <meta property="og:image" content="http://example.com/2025/07/18/rl-introduction/image-20250718024830657.png">
 <meta property="article:published_time" content="2025-07-17T17:54:23.000Z">
-<meta property="article:modified_time" content="2025-07-18T16:53:52.629Z">
+<meta property="article:modified_time" content="2025-07-18T16:58:51.988Z">
 <meta property="article:author" content="Liam">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2025/07/18/rl-introduction/image-20250718024647167.png">
@@ -210,7 +210,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-07-19 00:53:52" itemprop="dateModified" datetime="2025-07-19T00:53:52+08:00">2025-07-19</time>
+      <time title="修改时间：2025-07-19 00:58:51" itemprop="dateModified" datetime="2025-07-19T00:58:51+08:00">2025-07-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -255,8 +255,8 @@
 <li><strong>状态 (State, s)</strong>：环境在某个时刻的具体情况。比如，棋盘的当前布局、机器人当前的位置等；也可能是一个图像、一个向量、或一组离散变量。</li>
 <li><strong>动作 (Action, a)</strong>：智能体在某一状态下可以采取的行为选择。</li>
 <li><strong>策略 (Policy, π)</strong>：智能体在每个状态下选择动作的规则或概率分布，即状态到动作的映射（输入状态，输出动作）。可以是确定性的或随机的。</li>
-<li><strong>奖励 (Reward, r)</strong>：环境对智能体采取某个（单个）动作后的**<u>即时</u>**反馈。取决于当前状态、刚刚采取的行动以及下一个状态。</li>
-<li><strong>回报 (Return, R&#x2F;G)</strong>：从当前时刻开始，未来能获得的所有奖励的**<u>累计</u>**和。</li>
+<li><strong>奖励 (Reward, r)</strong>：环境对智能体采取某个（单个）动作后的 <strong><u>即时</u></strong> 反馈。取决于当前状态、刚刚采取的行动以及下一个状态。</li>
+<li><strong>回报 (Return, R&#x2F;G)</strong>：从当前时刻开始，未来能获得的所有奖励的 <strong><u>累计</u></strong> 和。</li>
 <li><strong>价值函数 (Value Function)</strong>：衡量某个状态（或状态-动作对）长期回报好坏的函数。常见的有状态价值函数 $V(s)$ 和动作价值函数 $Q(s,a)$：<ul>
 <li><strong>状态价值函数</strong> $V^{\pi}(s)$：在固定策略 $\pi$ 下，从状态 $s$ 出发以后，智能体期望获得的累计奖励。</li>
 <li><strong>动作价值函数</strong> $Q^{\pi}(s,a)$：在固定策略 $\pi$ 下，智能体在状态 $s$ 采取特定动作 $a$ 后，再继续按照策略 $\pi$ 行动时所能获得的累计奖励。</li>
