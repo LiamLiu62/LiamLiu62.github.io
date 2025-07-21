@@ -201,7 +201,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-07-19 01:53:33" itemprop="dateModified" datetime="2025-07-19T01:53:33+08:00">2025-07-19</time>
+      <time title="修改时间：2025-07-21 16:37:11" itemprop="dateModified" datetime="2025-07-21T16:37:11+08:00">2025-07-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -309,6 +309,24 @@
 </tr>
 </tbody></table>
 <p><strong>总结：奖励是单步反馈，回报是一条轨迹的累计奖励，价值函数是回报的期望值，也是强化学习要优化的目标。</strong></p>
+<h2 id="3-Markov-Decision-Processes-MDP"><a href="#3-Markov-Decision-Processes-MDP" class="headerlink" title="3. Markov Decision Processes, MDP"></a>3. Markov Decision Processes, MDP</h2><p>正式介绍 MDP 之前，首先明确一个点：<strong>使用 MDP 进行强化学习建模需要依赖于环境，属于经典的 model-based 方法</strong>，这一点后面会具体说明。</p>
+<img src="/2025/07/18/rl-introduction/image-20250718024830657.png" alt="image-20250718024830657" style="zoom:50%;">
+
+<ul>
+<li><p><strong>定义</strong>：A sequential decision problem for a fully observable, stochastic environment with a Markovian transition model and additive rewards is called a Markov decision process，即首先 MDP 是一个 <strong>序列决策</strong> 问题，其次是 <strong>完全可观测</strong>、<strong>具有马尔可夫转移模型</strong>，并且 <strong>伴有奖励&#x2F;惩罚机制</strong>。</p>
+</li>
+<li><p><strong>转移模型 (Transition model, T)</strong>：描述当智能体在某个状态 $s$ 下采取动作 $a$ 后，会以什么概率转移到下一个状态 $s’$，这个概率可以使用 $P(s’\mid s,a)$ 表示。</p>
+</li>
+<li><p><strong>数学形式</strong>：<br>$$<br>\langle S, A, R, P, \rho_0 \rangle<br>$$</p>
+<ul>
+<li><strong>S</strong> 表示所有有效状态的集合</li>
+<li><strong>A</strong> 表示所有有效动作的集合</li>
+<li><strong>R: S×A×S→R</strong> 是奖励函数，其定义为 $r_t &#x3D; R(s_t, a_t, s_{t+1})$</li>
+<li><strong>P: S×A→P(S)</strong> 是状态转移概率函数，其中 $P(s’ \mid s, a)$ 表示如果你处于状态 $s$ 并采取动作 $a$，则转移到状态 $s’$的概率</li>
+<li><strong>ρ0</strong> 是初始状态分布。</li>
+</ul>
+</li>
+</ul>
 
       
     </div>
