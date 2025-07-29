@@ -201,7 +201,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-07-30 04:32:48" itemprop="dateModified" datetime="2025-07-30T04:32:48+08:00">2025-07-30</time>
+      <time title="修改时间：2025-07-30 04:42:26" itemprop="dateModified" datetime="2025-07-30T04:42:26+08:00">2025-07-30</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -310,10 +310,10 @@
 <li><p>$Q^\pi(s, a)$：在 $s$ 做 $a$，到 $s’$，再按 $\pi$ 选择 $a’$ 递归。<br>$$<br>Q^\pi(s, a) &#x3D; \mathbb{E}_{(r,s’)\sim p(\cdot,\cdot|s,a),\ a’\sim\pi(\cdot|s’)} \left[, r + \gamma Q^\pi(s’, a’), \right]<br>$$</p>
 <p>$$<br>Q^\pi(s, a) &#x3D; \sum_{s’} p(s’|s, a) \left[ r(s, a, s’) + \gamma \sum_{a’} \pi(a’|s’) Q^\pi(s’, a’) \right]<br>$$</p>
 </li>
-<li><p>$V^<em>(s)$<br>$$<br>V^</em>(s) &#x3D; \max_{a}\ \mathbb{E}_{(r,s’)\sim p(\cdot,\cdot|s,a)} \left[, r + \gamma V^*(s’), \right]<br>$$</p>
+<li><p>$V^<em>(s)$：<br>$$<br>V^</em>(s) &#x3D; \max_{a}\ \mathbb{E}_{(r,s’)\sim p(\cdot,\cdot|s,a)} \left[, r + \gamma V^*(s’), \right]<br>$$</p>
 <p>$$<br>V^<em>(s) &#x3D; \max_{a} \sum_{s’} p(s’|s, a) \left[ r(s, a, s’) + \gamma V^</em>(s’) \right]<br>$$</p>
 </li>
-<li><p>$Q^<em>(s, a)$<br>$$<br>Q^</em>(s, a) &#x3D; \mathbb{E}<em>{(r,s’)\sim p(\cdot,\cdot|s,a)} \left[, r + \gamma \max</em>{a’} Q^*(s’, a’), \right]<br>$$</p>
+<li><p>$Q^<em>(s, a)$：<br>$$<br>Q^</em>(s, a) &#x3D; \mathbb{E}<em>{(r,s’)\sim p(\cdot,\cdot|s,a)} \left[, r + \gamma \max</em>{a’} Q^*(s’, a’), \right]<br>$$</p>
 <p>$$<br>Q^<em>(s, a) &#x3D; \sum_{s’} p(s’|s, a) \left[ r(s, a, s’) + \gamma \max_{a’} Q^</em>(s’, a’) \right]<br>$$</p>
 </li>
 </ul>
@@ -383,7 +383,7 @@
 <li><strong>ρ0</strong> 是初始状态分布。</li>
 </ul>
 </li>
-<li><p>**轨迹概率分布：*<em>轨迹用 $\tau$ 表示，$\tau &#x3D; (s_0, a_0, s_1, a_1, …)$。假设转移函数和策略都是随机的，此时 $T$ 步轨迹的概率为 ：<br>$$<br>P(\tau|\pi) &#x3D; \rho_0 (s_0) \prod_{t&#x3D;0}^{T-1} P(s_{t+1} | s_t, a_t) \pi(a_t | s_t)<br>$$<br>其中， $\rho_0 (s_0)$ 为初始状态 $s_0$ 的分布。预期回报 $J(\pi)$ 为：<br>$$<br>J(\pi) &#x3D; \int_{\tau} P(\tau|\pi) R(\tau) &#x3D; E_{\tau\sim \pi}{R(\tau)}<br>$$<br><strong>因此，强化学习中的核心优化问题可以表示为：</strong><br>$$<br>\pi^</em> &#x3D; \arg \max_{\pi} J(\pi)<br>$$</p>
+<li><p>**轨迹概率分布：*<em>轨迹用 $\tau$ 表示，$\tau &#x3D; (s_0, a_0, s_1, a_1, …)$。假设转移函数和策略都是随机的，此时 $T$ 步轨迹的概率为 ：<br>$$<br>P(\tau|\pi) &#x3D; \rho_0 (s_0) \prod_{t&#x3D;0}^{T-1} P(s_{t+1} | s_t, a_t) \pi(a_t | s_t)<br>$$<br>其中， $\rho_0 (s_0)$ 为初始状态 $s_0$ 的分布。预期回报 $J(\pi)$ 为：<br>$$<br>J(\pi) &#x3D; \int_{\tau} P(\tau|\pi) R(\tau) &#x3D; E_{\tau\sim \pi}{R(\tau)}<br>$$<br><strong>因此，强化学习中的核心优化问题可以表示为</strong>：<br>$$<br>\pi^</em> &#x3D; \arg \max_{\pi} J(\pi)<br>$$</p>
 </li>
 </ul>
 <h2 id><a href="#" class="headerlink" title></a></h2>
