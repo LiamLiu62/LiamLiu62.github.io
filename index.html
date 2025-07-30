@@ -62,7 +62,7 @@
 
   
 
-  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
 <script src="/js/third-party/math/mathjax.js" defer></script>
 
 
@@ -201,7 +201,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-07-30 04:42:26" itemprop="dateModified" datetime="2025-07-30T04:42:26+08:00">2025-07-30</time>
+      <time title="修改时间：2025-07-30 18:57:13" itemprop="dateModified" datetime="2025-07-30T18:57:13+08:00">2025-07-30</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -223,113 +223,166 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="强化学习基础介绍"><a href="#强化学习基础介绍" class="headerlink" title="强化学习基础介绍"></a>强化学习基础介绍</h1><p>ps. 本来不是研究强化学习这方面的知识，但奈何强化学习已经在各顶会中崭露头角，本科和硕士期间都在学校简单接触过，但是也是学完就扔了，因此打算写成博客来系统性学习记录一下。</p>
+          <h1 id="强化学习基础介绍">强化学习基础介绍</h1>
+<p>ps.
+本来不是研究强化学习这方面的知识，但奈何强化学习已经在各顶会中崭露头角，本科和硕士期间都在学校简单接触过，但是也是学完就扔了，因此打算写成博客来系统性学习记录一下。</p>
 <p>本系列主要参考：</p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://github.com/MathFoundationRL/Book-Mathmatical-Foundation-of-Reinforcement-Learning">西湖大学赵世钰老师《强化学习的数学原理》</a></li>
-<li><a target="_blank" rel="noopener" href="https://spinningup.openai.com/en/latest/">OpenAI 官方强化学习课程</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=q9972BRoXzQ">UCLA RL-LLM 2025 Spring</a></li>
+<li><a target="_blank" rel="noopener" href="https://spinningup.openai.com/en/latest/">OpenAI
+官方强化学习课程</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=q9972BRoXzQ">UCLA RL-LLM
+2025 Spring</a></li>
 </ul>
 <p>下面就开始进入强化学习的世界吧 ！！！</p>
-<h2 id="1-强化学习重要性"><a href="#1-强化学习重要性" class="headerlink" title="1. 强化学习重要性"></a>1. 强化学习重要性</h2><p>以前接触 RL 基本上只是在很经典很老的一些算法层面，比如 MC Learning, TD Learning, Q-Learning 这种，但是最近 RL 在 LLM 中表现过于亮眼，因此很有必要学习更深入的 RL 方法。此外，与传统的监督学习相比（只是在模仿答案），RL 可以算得上是真正的具有智慧的机器学习方法。因此首先举出 RL 在 LLM 上的优点：</p>
+<h2 id="强化学习重要性">1. 强化学习重要性</h2>
+<p>以前接触 RL 基本上只是在很经典很老的一些算法层面，比如 MC Learning,
+TD Learning, Q-Learning 这种，但是最近 RL 在 LLM
+中表现过于亮眼，因此很有必要学习更深入的 RL
+方法。此外，与传统的监督学习相比（只是在模仿答案），RL
+可以算得上是真正的具有智慧的机器学习方法。因此首先举出 RL 在 LLM
+上的优点：</p>
 <ul>
-<li>通过 RL，大语言模型 (LLM)可以学会如何使用思维链 (CoT)，这大致意味着在回答问题前先自我对话。人类内部的思考过程导致的文本，在预训练数据中大多是缺失的，但我们可以用 RL 来复现这种能力。Deepseek R1 和 OpenAI o1 (o3) 已经明确展示了这一点。对这种方法的进一步优化肯定会带来更多进步。</li>
+<li>通过 RL，大语言模型 (LLM)可以学会如何使用思维链
+(CoT)，这大致意味着在回答问题前先自我对话。人类内部的思考过程导致的文本，在预训练数据中大多是缺失的，但我们可以用
+RL 来复现这种能力。Deepseek R1 和 OpenAI o1 (o3)
+已经明确展示了这一点。对这种方法的进一步优化肯定会带来更多进步。</li>
 <li>强化学习可能是发现正确因果关系、消除启发式方法中误解的关键，而不是仅仅依赖表面经验规则。举个例子，打篮球的时候看运动员的视频学技术，但如果只照搬表面步骤，往往会失败。要学会这一点，仅靠观察是不够的，你必须亲自尝试这个动作，当你用对的方法成功突破并得分时，这种“被奖励”的体验会强化你的记忆，让你真正学会。</li>
 </ul>
-<h2 id="2-什么是强化学习"><a href="#2-什么是强化学习" class="headerlink" title="2. 什么是强化学习"></a>2. 什么是强化学习</h2><ul>
-<li><strong>一句话概括</strong>：智能体 (agent) 根据环境 (environment) 反馈的奖励 (reward），调整自己的行为策略 (policy)，以实现长期目标的最大化。</li>
-<li><strong>简单举例</strong>：训练一只狗学会坐下。每当狗狗坐下时，你会给它奖励（比如小零食）；如果它没有按照指令做，你不给奖励（甚至轻微惩罚）。狗狗通过多次尝试，逐渐学会了“坐下”这个动作能带来奖励，所以以后更愿意这样做。</li>
-<li><strong>强化学习 vs 监督学习</strong>：<ul>
-<li><strong>监督学习</strong>：<strong>Input-Output Pairs</strong> 数据格式，<strong>学习两者之间的映射关系</strong>；监督学习是单一选择问题，如分类。</li>
-<li><strong>强化学习</strong>：数据是智能体和环境交互过程中“生成”的，这些数据通常被称为 <strong>“经验 (Experience)”</strong> 或 <strong>“轨迹 (Trajectory)”</strong>，<strong>学习的是一个策略函数</strong>，即在不同状态下如何选择动作，以最大化累计奖励；强化学习是决策序列问题（多个选择）。</li>
-</ul>
-</li>
-</ul>
-<h2 id="3-Markov-Decision-Processes-MDP"><a href="#3-Markov-Decision-Processes-MDP" class="headerlink" title="3. Markov Decision Processes, MDP"></a>3. Markov Decision Processes, MDP</h2><p>在正式介绍 RL 之前，需要先了解清楚其理论基础马尔可夫决策过程 (MDP)。RL 和 MDP 之间的关系可以看作：<strong>MDP 是问题的“建模框架”，RL 是“求解方法”</strong>。</p>
+<h2 id="什么是强化学习">2. 什么是强化学习</h2>
 <ul>
-<li><strong>定义</strong>：A sequential decision problem for a fully observable, stochastic environment with a Markovian transition model and additive rewards is called a Markov decision process，即首先 MDP 是一个 <strong>序列决策 (Sequential Decision)</strong> 问题，其次是 <strong>完全可观测</strong>、<strong>具有马尔可夫转移模型</strong>，并且 <strong>伴有奖励&#x2F;惩罚机制</strong>。</li>
+<li><strong>一句话概括</strong>：智能体 (agent) 根据环境 (environment)
+反馈的奖励 (reward），调整自己的行为策略
+(policy)，以实现长期目标的最大化。</li>
+<li><strong>简单举例</strong>：训练一只狗学会坐下。每当狗狗坐下时，你会给它奖励（比如小零食）；如果它没有按照指令做，你不给奖励（甚至轻微惩罚）。狗狗通过多次尝试，逐渐学会了“坐下”这个动作能带来奖励，所以以后更愿意这样做。</li>
+<li><strong>强化学习 vs 监督学习</strong>：
+<ul>
+<li><strong>监督学习</strong>：<strong>Input-Output Pairs</strong>
+数据格式，<strong>学习两者之间的映射关系</strong>；监督学习是单一选择问题，如分类。</li>
+<li><strong>强化学习</strong>：数据是智能体和环境交互过程中“生成”的，这些数据通常被称为
+<strong>“经验 (Experience)”</strong> 或 <strong>“轨迹
+(Trajectory)”</strong>，<strong>学习的是一个策略函数</strong>，即在不同状态下如何选择动作，以最大化累计奖励；强化学习是决策序列问题（多个选择）。</li>
+</ul></li>
 </ul>
-<p>​                 <img src="/2025/07/18/rl-introduction/image-20250718024647167.png" alt="image-20250718024647167" style="zoom:50%;"><img src="/2025/07/18/rl-introduction/image-20250718024830657.png" alt="image-20250718024830657" style="zoom:50%;"></p>
-<p>RL &#x2F; MDP 通常由以下几个核心要素组成：</p>
+<h2 id="markov-decision-processes-mdp">3. Markov Decision Processes,
+MDP</h2>
+<p>在正式介绍 RL 之前，需要先了解清楚其理论基础马尔可夫决策过程
+(MDP)。RL 和 MDP 之间的关系可以看作：<strong>MDP 是问题的“建模框架”，RL
+是“求解方法”</strong>。</p>
+<ul>
+<li><strong>定义</strong>：A sequential decision problem for a fully
+observable, stochastic environment with a Markovian transition model and
+additive rewards is called a Markov decision process，即首先 MDP 是一个
+<strong>序列决策 (Sequential Decision)</strong> 问题，其次是
+<strong>完全可观测</strong>、<strong>具有马尔可夫转移模型</strong>，并且
+<strong>伴有奖励/惩罚机制</strong>。</li>
+</ul>
+<p>​
+<img src="/2025/07/18/rl-introduction/image-20250718024647167.png" alt="image-20250718024647167" style="zoom:50%;"><img src="/2025/07/18/rl-introduction/image-20250718024830657.png" alt="image-20250718024830657" style="zoom:50%;"></p>
+<p>RL / MDP 通常由以下几个核心要素组成：</p>
 <ul>
 <li><strong>智能体 (Agent)</strong>：学习和做决策的主体。</li>
-<li><strong>环境 (Environment)</strong>：智能体进行交互的对象。当智能体采取动作后，环境会反馈新的状态和奖励。</li>
-<li><strong>状态 (State, s)</strong>：环境在某个时刻的具体情况。比如，棋盘的当前布局、迷宫中当前位置等；也可能是一个图像、一个向量、或一组离散变量。</li>
-<li><strong>动作 (Action, a)</strong>：智能体在某一状态下可以采取的行为选择。比如向上或向右移动。</li>
-<li><strong>策略 (Policy, π)</strong>：智能体在每个状态下选择动作的规则或概率分布，即状态到动作的映射（输入状态，输出动作）。可以是确定性 $a_t&#x3D;\mu(s_t)$ 的或随机的 $a_t\sim\pi(·|s_t)$，比如在当前状态下的策略为向上移动，或 50% 向上 50% 向右。</li>
-<li><strong>转移模型 (Transition model, T)</strong>：描述当智能体在某个状态 $s$ 下采取动作 $a$ 后，会以什么概率转移到下一个状态 $s’$，这个概率可以使用 $P(s’\mid s,a)$ 表示。可以是确定性的或随机的，比如策略决定向右移动后，实际下一个状态可能是 80% 在原位置的右边（向右），20% 在原位置下面（向下）。<strong><u>这里的随机性是环境所决定的。</u></strong></li>
-<li><strong>奖励 (Reward, r)</strong>：环境对智能体采取某个（单个）动作后的 <strong><u>即时</u></strong> 反馈。取决于当前状态、刚刚采取的行动以及下一个状态。即 $r_t&#x3D;R(s_t,a_t,s_{t+1})$。</li>
-<li><strong>回报 (Return, R&#x2F;G)</strong>：从当前时刻开始，未来能获得的所有奖励的 <strong><u>累计</u></strong> 和。</li>
+<li><strong>环境
+(Environment)</strong>：智能体进行交互的对象。当智能体采取动作后，环境会反馈新的状态和奖励。</li>
+<li><strong>状态 (State,
+s)</strong>：环境在某个时刻的具体情况。比如，棋盘的当前布局、迷宫中当前位置等；也可能是一个图像、一个向量、或一组离散变量。</li>
+<li><strong>动作 (Action,
+a)</strong>：智能体在某一状态下可以采取的行为选择。比如向上或向右移动。</li>
+<li><strong>策略 (Policy,
+π)</strong>：智能体在每个状态下选择动作的规则或概率分布，即状态到动作的映射（输入状态，输出动作）。可以是确定性
+<span class="math inline"><em>a</em><sub><em>t</em></sub> = <em>μ</em>(<em>s</em><sub><em>t</em></sub>)</span>
+的或随机的 <span class="math inline"><em>a</em><sub><em>t</em></sub> ∼ <em>π</em>(·|<em>s</em><sub><em>t</em></sub>)</span>，比如在当前状态下的策略为向上移动，或
+50% 向上 50% 向右。</li>
+<li><strong>转移模型 (Transition model,
+T)</strong>：描述当智能体在某个状态 <span class="math inline"><em>s</em></span> 下采取动作 <span class="math inline"><em>a</em></span> 后，会以什么概率转移到下一个状态
+<span class="math inline"><em>s</em><sup>′</sup></span>，这个概率可以使用
+<span class="math inline"><em>P</em>(<em>s</em><sup>′</sup> ∣ <em>s</em>, <em>a</em>)</span>
+表示。可以是确定性的或随机的，比如策略决定向右移动后，实际下一个状态可能是
+80% 在原位置的右边（向右），20%
+在原位置下面（向下）。<strong><u>这里的随机性是环境所决定的。</u></strong></li>
+<li><strong>奖励 (Reward,
+r)</strong>：环境对智能体采取某个（单个）动作后的
+<strong><u>即时</u></strong>
+反馈。取决于当前状态、刚刚采取的行动以及下一个状态。即 <span class="math inline"><em>r</em><sub><em>t</em></sub> = <em>R</em>(<em>s</em><sub><em>t</em></sub>, <em>a</em><sub><em>t</em></sub>, <em>s</em><sub><em>t</em> + 1</sub>)</span>。</li>
+<li><strong>回报 (Return,
+R/G)</strong>：从当前时刻开始，未来能获得的所有奖励的
+<strong><u>累计</u></strong> 和。</li>
 </ul>
 <hr>
 <ul>
-<li><p><strong>价值函数 (Value Function)</strong>：衡量某个状态（或状态-动作对）长期回报好坏的函数。常见的有状态价值函数 $V(s)$ 和动作价值函数 $Q(s,a)$：</p>
+<li><p><strong>价值函数 (Value
+Function)</strong>：衡量某个状态（或状态-动作对）长期回报好坏的函数。常见的有状态价值函数
+<span class="math inline"><em>V</em>(<em>s</em>)</span> 和动作价值函数
+<span class="math inline"><em>Q</em>(<em>s</em>, <em>a</em>)</span>：</p>
 <ul>
-<li><p><strong>状态价值函数</strong> $V^{\pi}(s)$：在固定策略 $\pi$ 下，从状态 $s$ 出发以后，智能体期望获得的累计奖励。</p>
-<img src="/2025/07/18/rl-introduction/image-20250728011535412.png" alt="image-20250728011535412" style="zoom:40%;">
-
-
-
+<li><p><strong>状态价值函数</strong> <span class="math inline"><em>V</em><sup><em>π</em></sup>(<em>s</em>)</span>：在固定策略
+<span class="math inline"><em>π</em></span> 下，从状态 <span class="math inline"><em>s</em></span>
+出发以后，智能体期望获得的累计奖励。</p>
+<p><img src="/2025/07/18/rl-introduction/image-20250728011535412.png" alt="image-20250728011535412" style="zoom:40%;"></p>
 <ul>
-<li><p><strong>最优状态价值函数</strong> $V^<em>(s)$：在 $s$ 下采取 <strong>最优策略</strong> 所能获得的最大期望累计回报<br>$$<br>V^</em>(s) &#x3D; \max_\pi V^\pi(s)<br>$$</p>
-</li>
+<li><p><strong>最优状态价值函数</strong> <span class="math inline"><em>V</em><sup>*</sup>(<em>s</em>)</span>：在 <span class="math inline"><em>s</em></span> 下采取 <strong>最优策略</strong>
+所能获得的最大期望累计回报。 <span class="math display"><em>V</em><sup>*</sup>(<em>s</em>) = max<sub><em>π</em></sub><em>V</em><sup><em>π</em></sup>(<em>s</em>)</span></p></li>
 <li><p><strong>转移性质：</strong></p>
-<img src="/2025/07/18/rl-introduction/image-20250729230638869.png" alt="image-20250729230638869" style="zoom:40%;"></li>
-</ul>
-</li>
-<li><p><strong>动作价值函数</strong> $Q^{\pi}(s,a)$：在固定策略 $\pi$ 下，智能体在状态 $s$ 采取特定动作 $a$ 后，再继续按照策略 $\pi$ 行动时所能获得的累计奖励。</p>
-<img src="/2025/07/18/rl-introduction/image-20250728011620617.png" alt="image-20250728011620617" style="zoom:40%;">
-
+<p><img src="/2025/07/18/rl-introduction/image-20250729230638869.png" alt="image-20250729230638869" style="zoom:40%;"></p></li>
+</ul></li>
+<li><p><strong>动作价值函数</strong> <span class="math inline"><em>Q</em><sup><em>π</em></sup>(<em>s</em>, <em>a</em>)</span>：在固定策略
+<span class="math inline"><em>π</em></span> 下，智能体在状态 <span class="math inline"><em>s</em></span> 采取特定动作 <span class="math inline"><em>a</em></span> 后，再继续按照策略 <span class="math inline"><em>π</em></span> 行动时所能获得的累计奖励。</p>
+<p><img src="/2025/07/18/rl-introduction/image-20250728011620617.png" alt="image-20250728011620617" style="zoom:40%;"></p>
 <ul>
-<li><p><strong>最优动作价值函数</strong> $Q^<em>(s, a)$：在 $s$ 采取 $a$，然后 <strong>之后都最优</strong> 地行动所能获得的最大期望累计回报<br>$$<br>Q^</em>(s, a) &#x3D; \max_\pi Q^\pi(s, a)<br>$$</p>
-</li>
+<li><p><strong>最优动作价值函数</strong> <span class="math inline"><em>Q</em><sup>*</sup>(<em>s</em>, <em>a</em>)</span>：在
+<span class="math inline"><em>s</em></span> 采取 <span class="math inline"><em>a</em></span>，然后 <strong>之后都最优</strong>
+地行动所能获得的最大期望累计回报。 <span class="math display"><em>Q</em><sup>*</sup>(<em>s</em>, <em>a</em>) = max<sub><em>π</em></sub><em>Q</em><sup><em>π</em></sup>(<em>s</em>, <em>a</em>)</span></p></li>
 <li><p><strong>转移性质：</strong></p>
-<img src="/2025/07/18/rl-introduction/image-20250729230610733.png" alt="image-20250729230610733" style="zoom:40%;"></li>
-</ul>
-</li>
-<li><p>$V^{\pi}(s)$ 和 $Q^{\pi}(s,a)$ 关系：<strong>加权期望</strong></p>
-<img src="/2025/07/18/rl-introduction/image-20250728012314561.png" alt="image-20250728012314561" style="zoom:40%;">
-</li>
-<li><p>$V^<em>(s)$ 和 $Q^</em>(s, a)$ 之间的关系：<br>$$<br>V^<em>(s) &#x3D; \max_{a} Q^</em>(s, a)<br>$$</p>
-<p>$$<br>Q^<em>(s, a) &#x3D; \mathbb{E}_{s’, r} \left[ r + \gamma V^</em>(s’) \right]<br>$$</p>
-</li>
-<li><ul>
-<li></li>
-</ul>
-</li>
-</ul>
-</li>
+<p><img src="/2025/07/18/rl-introduction/image-20250729230610733.png" alt="image-20250729230610733" style="zoom:40%;"></p></li>
+</ul></li>
+<li><p><span class="math inline"><em>V</em><sup><em>π</em></sup>(<em>s</em>)</span>
+和 <span class="math inline"><em>Q</em><sup><em>π</em></sup>(<em>s</em>, <em>a</em>)</span>
+关系：<strong>加权期望</strong>。</p>
+<p><img src="/2025/07/18/rl-introduction/image-20250728012314561.png" alt="image-20250728012314561" style="zoom:40%;"></p></li>
+<li><p><span class="math inline"><em>V</em><sup>*</sup>(<em>s</em>)</span> 和 <span class="math inline"><em>Q</em><sup>*</sup>(<em>s</em>, <em>a</em>)</span>
+之间的关系： <span class="math display"><em>V</em><sup>*</sup>(<em>s</em>) = max<sub><em>a</em></sub><em>Q</em><sup>*</sup>(<em>s</em>, <em>a</em>)</span></p>
+<p><span class="math display"><em>Q</em><sup>*</sup>(<em>s</em>, <em>a</em>) = 𝔼<sub><em>s</em><sup>′</sup>, <em>r</em></sub>[<em>r</em> + <em>γ</em><em>V</em><sup>*</sup>(<em>s</em><sup>′</sup>)]</span></p></li>
+</ul></li>
 </ul>
 <hr>
 <ul>
-<li><p><strong>贝尔曼方程 (Bellman Equation)</strong>：揭示两个状态之间的关系</p>
+<li><p><strong>贝尔曼方程 (Bellman
+Equation)</strong>：揭示两个状态之间的关系</p>
 <ul>
-<li><p>$V^\pi(s)$：在 $s$ 按 $\pi$ 选择动作 $a$，到 $s’$ 并获得奖励 $r$，未来递归。<br>$$<br>V^\pi(s) &#x3D; \mathbb{E}_{a\sim\pi(\cdot|s),\ (r,s’)\sim p(\cdot,\cdot|s,a)} \left[ r + \gamma V^\pi(s’) \right]<br>$$</p>
-<p>$$<br>V^\pi(s) &#x3D; \sum_{a} \pi(a|s) \sum_{s’} p(s’|s, a) \left[ r(s,a,s’) + \gamma V^\pi(s’) \right]<br>$$</p>
-</li>
-<li><p>$Q^\pi(s, a)$：在 $s$ 做 $a$，到 $s’$，再按 $\pi$ 选择 $a’$ 递归。<br>$$<br>Q^\pi(s, a) &#x3D; \mathbb{E}_{(r,s’)\sim p(\cdot,\cdot|s,a),\ a’\sim\pi(\cdot|s’)} \left[, r + \gamma Q^\pi(s’, a’), \right]<br>$$</p>
-<p>$$<br>Q^\pi(s, a) &#x3D; \sum_{s’} p(s’|s, a) \left[ r(s, a, s’) + \gamma \sum_{a’} \pi(a’|s’) Q^\pi(s’, a’) \right]<br>$$</p>
-</li>
-<li><p>$V^<em>(s)$：<br>$$<br>V^</em>(s) &#x3D; \max_{a}\ \mathbb{E}_{(r,s’)\sim p(\cdot,\cdot|s,a)} \left[, r + \gamma V^*(s’), \right]<br>$$</p>
-<p>$$<br>V^<em>(s) &#x3D; \max_{a} \sum_{s’} p(s’|s, a) \left[ r(s, a, s’) + \gamma V^</em>(s’) \right]<br>$$</p>
-</li>
-<li><p>$Q^<em>(s, a)$：<br>$$<br>Q^</em>(s, a) &#x3D; \mathbb{E}<em>{(r,s’)\sim p(\cdot,\cdot|s,a)} \left[, r + \gamma \max</em>{a’} Q^*(s’, a’), \right]<br>$$</p>
-<p>$$<br>Q^<em>(s, a) &#x3D; \sum_{s’} p(s’|s, a) \left[ r(s, a, s’) + \gamma \max_{a’} Q^</em>(s’, a’) \right]<br>$$</p>
-</li>
+<li><p><span class="math inline"><em>V</em><sup><em>π</em></sup>(<em>s</em>)</span>：在
+<span class="math inline"><em>s</em></span> 按 <span class="math inline"><em>π</em></span> 选择动作 <span class="math inline"><em>a</em></span>，到 <span class="math inline"><em>s</em><sup>′</sup></span> 并获得奖励 <span class="math inline"><em>r</em></span>，未来递归。 <span class="math display"><em>V</em><sup><em>π</em></sup>(<em>s</em>) = 𝔼<sub><em>a</em> ∼ <em>π</em>(⋅|<em>s</em>), (<em>r</em>, <em>s</em><sup>′</sup>) ∼ <em>p</em>(⋅, ⋅|<em>s</em>, <em>a</em>)</sub>[<em>r</em> + <em>γ</em><em>V</em><sup><em>π</em></sup>(<em>s</em><sup>′</sup>)]</span></p>
+<p><span class="math display"><em>V</em><sup><em>π</em></sup>(<em>s</em>) = ∑<sub><em>a</em></sub><em>π</em>(<em>a</em>|<em>s</em>)∑<sub><em>s</em><sup>′</sup></sub><em>p</em>(<em>s</em><sup>′</sup>|<em>s</em>, <em>a</em>)[<em>r</em>(<em>s</em>, <em>a</em>, <em>s</em><sup>′</sup>) + <em>γ</em><em>V</em><sup><em>π</em></sup>(<em>s</em><sup>′</sup>)]</span></p></li>
+<li><p><span class="math inline"><em>Q</em><sup><em>π</em></sup>(<em>s</em>, <em>a</em>)</span>：在
+<span class="math inline"><em>s</em></span> 做 <span class="math inline"><em>a</em></span>，到 <span class="math inline"><em>s</em><sup>′</sup></span>，再按 <span class="math inline"><em>π</em></span> 选择 <span class="math inline"><em>a</em><sup>′</sup></span> 递归。 <span class="math display"><em>Q</em><sup><em>π</em></sup>(<em>s</em>, <em>a</em>) = 𝔼<sub>(<em>r</em>, <em>s</em><sup>′</sup>) ∼ <em>p</em>(⋅, ⋅|<em>s</em>, <em>a</em>), <em>a</em><sup>′</sup> ∼ <em>π</em>(⋅|<em>s</em><sup>′</sup>)</sub>[ <em>r</em> + <em>γ</em><em>Q</em><sup><em>π</em></sup>(<em>s</em><sup>′</sup>, <em>a</em><sup>′</sup>) ]</span></p>
+<p><span class="math display"><em>Q</em><sup><em>π</em></sup>(<em>s</em>, <em>a</em>) = ∑<sub><em>s</em><sup>′</sup></sub><em>p</em>(<em>s</em><sup>′</sup>|<em>s</em>, <em>a</em>)[<em>r</em>(<em>s</em>, <em>a</em>, <em>s</em><sup>′</sup>) + <em>γ</em>∑<sub><em>a</em><sup>′</sup></sub><em>π</em>(<em>a</em><sup>′</sup>|<em>s</em><sup>′</sup>)<em>Q</em><sup><em>π</em></sup>(<em>s</em><sup>′</sup>, <em>a</em><sup>′</sup>)]</span></p></li>
+<li><p><span class="math inline"><em>V</em><sup>*</sup>(<em>s</em>)</span>。 <span class="math display"><em>V</em><sup>*</sup>(<em>s</em>) = max<sub><em>a</em></sub> 𝔼<sub>(<em>r</em>, <em>s</em><sup>′</sup>) ∼ <em>p</em>(⋅, ⋅|<em>s</em>, <em>a</em>)</sub>[ <em>r</em> + <em>γ</em><em>V</em><sup>*</sup>(<em>s</em><sup>′</sup>) ]</span></p>
+<p><span class="math display"><em>V</em><sup>*</sup>(<em>s</em>) = max<sub><em>a</em></sub>∑<sub><em>s</em><sup>′</sup></sub><em>p</em>(<em>s</em><sup>′</sup>|<em>s</em>, <em>a</em>)[<em>r</em>(<em>s</em>, <em>a</em>, <em>s</em><sup>′</sup>) + <em>γ</em><em>V</em><sup>*</sup>(<em>s</em><sup>′</sup>)]</span></p></li>
+<li><p><span class="math inline"><em>Q</em><sup>*</sup>(<em>s</em>, <em>a</em>)</span>。
+<span class="math display"><em>Q</em><sup>*</sup>(<em>s</em>, <em>a</em>) = 𝔼<sub>(<em>r</em>, <em>s</em><sup>′</sup>) ∼ <em>p</em>(⋅, ⋅|<em>s</em>, <em>a</em>)</sub>[ <em>r</em> + <em>γ</em>max<sub><em>a</em><sup>′</sup></sub><em>Q</em><sup>*</sup>(<em>s</em><sup>′</sup>, <em>a</em><sup>′</sup>) ]</span></p>
+<p><span class="math display"><em>Q</em><sup>*</sup>(<em>s</em>, <em>a</em>) = ∑<sub><em>s</em><sup>′</sup></sub><em>p</em>(<em>s</em><sup>′</sup>|<em>s</em>, <em>a</em>)[<em>r</em>(<em>s</em>, <em>a</em>, <em>s</em><sup>′</sup>) + <em>γ</em>max<sub><em>a</em><sup>′</sup></sub><em>Q</em><sup>*</sup>(<em>s</em><sup>′</sup>, <em>a</em><sup>′</sup>)]</span></p></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<p>这里对奖励 (Reward)，回报 (Return)，价值函数之间的关系做个详细解释：</p>
+<hr>
+<p>这里对奖励 (Reward)，回报
+(Return)，价值函数之间的关系做个详细解释：</p>
 <table>
+<colgroup>
+<col style="width: 9%">
+<col style="width: 23%">
+<col style="width: 35%">
+<col style="width: 31%">
+</colgroup>
 <thead>
 <tr>
 <th>项目</th>
-<th>奖励 Reward ($r$)</th>
-<th>回报 Return ($G_t$)</th>
-<th>价值函数 Value Function ($V^\pi(s)$, $Q^\pi(s,a)$)</th>
+<th>奖励 Reward (<span class="math inline"><em>r</em></span>)</th>
+<th>回报 Return (<span class="math inline"><em>G</em><sub><em>t</em></sub></span>)</th>
+<th>价值函数 Value Function (<span class="math inline"><em>V</em><sup><em>π</em></sup>(<em>s</em>)</span>,
+<span class="math inline"><em>Q</em><sup><em>π</em></sup>(<em>s</em>, <em>a</em>)</span>)</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><strong>定义</strong></td>
 <td>智能体与环境交互时，每一步获得的即时反馈</td>
 <td>从当前时刻起，未来所有奖励的累计和（通常带折扣）</td>
@@ -337,9 +390,9 @@
 </tr>
 <tr>
 <td><strong>数学表达</strong></td>
-<td>$r_{t+1}$</td>
-<td>$G_t &#x3D; r_{t+1} + \gamma r_{t+2} + \gamma^2 r_{t+3} + \cdots$</td>
-<td>$V^\pi(s) &#x3D; \mathbb{E}_\pi[G_t \mid s_t &#x3D; s]$</td>
+<td><span class="math inline"><em>r</em><sub><em>t</em> + 1</sub></span></td>
+<td><span class="math inline"><em>G</em><sub><em>t</em></sub> = <em>r</em><sub><em>t</em> + 1</sub> + <em>γ</em><em>r</em><sub><em>t</em> + 2</sub> + <em>γ</em><sup>2</sup><em>r</em><sub><em>t</em> + 3</sub> + ⋯</span></td>
+<td><span class="math inline"><em>V</em><sup><em>π</em></sup>(<em>s</em>) = 𝔼<sub><em>π</em></sub>[<em>G</em><sub><em>t</em></sub> ∣ <em>s</em><sub><em>t</em></sub> = <em>s</em>]</span></td>
 </tr>
 <tr>
 <td><strong>作用范围</strong></td>
@@ -361,9 +414,10 @@
 </tr>
 <tr>
 <td><strong>举例</strong></td>
-<td>当前位置走一步，得到 $-1$</td>
-<td>迷宫从起点出发本轮累计得分 $G_0&#x3D;81$</td>
-<td>起点采用策略 $\pi$ 平均每次能拿 $V^\pi(s_0)&#x3D;82$</td>
+<td>当前位置走一步，得到 <span class="math inline">−1</span></td>
+<td>迷宫从起点出发本轮累计得分 <span class="math inline"><em>G</em><sub>0</sub> = 81</span></td>
+<td>起点采用策略 <span class="math inline"><em>π</em></span>
+平均每次能拿 <span class="math inline"><em>V</em><sup><em>π</em></sup>(<em>s</em><sub>0</sub>) = 82</span></td>
 </tr>
 <tr>
 <td><strong>强化学习目标</strong></td>
@@ -371,22 +425,32 @@
 <td>不是直接优化目标，是中间变量</td>
 <td><strong>最终优化目标：最大化价值函数（即最大化期望回报）</strong></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <p><strong>总结：奖励是单步反馈，回报是一条轨迹的累计奖励，价值函数是回报的期望值，也是强化学习要优化的目标。</strong></p>
 <ul>
-<li><p><strong>MDP 数学形式</strong>：<br>$$<br>\langle S, A, R, P, \rho_0 \rangle<br>$$</p>
+<li><p><strong>MDP 数学形式</strong>： <span class="math display">⟨<em>S</em>, <em>A</em>, <em>R</em>, <em>P</em>, <em>ρ</em><sub>0</sub>⟩</span></p>
 <ul>
 <li><strong>S</strong> 表示所有有效状态的集合</li>
 <li><strong>A</strong> 表示所有有效动作的集合</li>
-<li><strong>R: S×A×S→R</strong> 是奖励函数，其定义为 $r_t &#x3D; R(s_t, a_t, s_{t+1})$</li>
-<li><strong>P: S×A→P(S)</strong> 是状态转移概率函数，其中 $P(s’ \mid s, a)$ 表示如果你处于状态 $s$ 并采取动作 $a$，则转移到状态 $s’$的概率</li>
+<li><strong>R: S×A×S→R</strong> 是奖励函数，其定义为 <span class="math inline"><em>r</em><sub><em>t</em></sub> = <em>R</em>(<em>s</em><sub><em>t</em></sub>, <em>a</em><sub><em>t</em></sub>, <em>s</em><sub><em>t</em> + 1</sub>)</span></li>
+<li><strong>P: S×A→P(S)</strong> 是状态转移概率函数，其中 <span class="math inline"><em>P</em>(<em>s</em><sup>′</sup> ∣ <em>s</em>, <em>a</em>)</span>
+表示如果你处于状态 <span class="math inline"><em>s</em></span>
+并采取动作 <span class="math inline"><em>a</em></span>，则转移到状态
+<span class="math inline"><em>s</em><sup>′</sup></span>的概率</li>
 <li><strong>ρ0</strong> 是初始状态分布。</li>
+</ul></li>
+<li><p><strong>轨迹概率分布：</strong>轨迹用 <span class="math inline"><em>τ</em></span> 表示，<span class="math inline"><em>τ</em> = (<em>s</em><sub>0</sub>, <em>a</em><sub>0</sub>, <em>s</em><sub>1</sub>, <em>a</em><sub>1</sub>, ...)</span>。假设转移函数和策略都是随机的，此时
+<span class="math inline"><em>T</em></span> 步轨迹的概率为 ： <span class="math display">$$
+P(\tau|\pi) = \rho_0 (s_0) \prod_{t=0}^{T-1} P(s_{t+1} | s_t, a_t)
+\pi(a_t | s_t)
+$$</span> 其中， <span class="math inline"><em>ρ</em><sub>0</sub>(<em>s</em><sub>0</sub>)</span>
+为初始状态 <span class="math inline"><em>s</em><sub>0</sub></span>
+的分布。预期回报 <span class="math inline"><em>J</em>(<em>π</em>)</span>
+为： <span class="math display"><em>J</em>(<em>π</em>) = ∫<sub><em>τ</em></sub><em>P</em>(<em>τ</em>|<em>π</em>)<em>R</em>(<em>τ</em>) = <em>E</em><sub><em>τ</em> ∼ <em>π</em></sub><em>R</em>(<em>τ</em>)</span>
+<strong>因此，强化学习中的核心优化问题可以表示为</strong>： <span class="math display"><em>π</em><sup>*</sup> = arg max<sub><em>π</em></sub><em>J</em>(<em>π</em>)</span></p></li>
 </ul>
-</li>
-<li><p>**轨迹概率分布：*<em>轨迹用 $\tau$ 表示，$\tau &#x3D; (s_0, a_0, s_1, a_1, …)$。假设转移函数和策略都是随机的，此时 $T$ 步轨迹的概率为 ：<br>$$<br>P(\tau|\pi) &#x3D; \rho_0 (s_0) \prod_{t&#x3D;0}^{T-1} P(s_{t+1} | s_t, a_t) \pi(a_t | s_t)<br>$$<br>其中， $\rho_0 (s_0)$ 为初始状态 $s_0$ 的分布。预期回报 $J(\pi)$ 为：<br>$$<br>J(\pi) &#x3D; \int_{\tau} P(\tau|\pi) R(\tau) &#x3D; E_{\tau\sim \pi}{R(\tau)}<br>$$<br><strong>因此，强化学习中的核心优化问题可以表示为</strong>：<br>$$<br>\pi^</em> &#x3D; \arg \max_{\pi} J(\pi)<br>$$</p>
-</li>
-</ul>
-<h2 id><a href="#" class="headerlink" title></a></h2>
+
       
     </div>
 
@@ -470,14 +534,16 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="为什么写"><a href="#为什么写" class="headerlink" title="为什么写"></a>为什么写</h1><p>其实自己写文档的习惯已经有快两年了，但之前大多在本地写写，现在之所以写在网站上写，理由无非以下几点：</p>
+          <h1 id="为什么写">为什么写</h1>
+<p>其实自己写文档的习惯已经有快两年了，但之前大多在本地写写，现在之所以写在网站上写，理由无非以下几点：</p>
 <ul>
 <li>计算机社区是一个很大的社交平台，封闭学习不如多与人交流来的直接。</li>
 <li>自己属于话比较多的人，但不是什么话都适合与朋友分享，因此写博客是最好的记录。</li>
 <li>科研是一个日积月累的过程，但我记性又不太好，所以好记性不如烂笔头。</li>
 <li>写一些科研技术或学习心得有助于复习和帮助他人。</li>
 </ul>
-<h1 id="写什么"><a href="#写什么" class="headerlink" title="写什么"></a>写什么</h1><p>由于不是纯粹的技术博客，我会写我想记录的一些杂七杂八的东西，去享受记录的快乐：</p>
+<h1 id="写什么">写什么</h1>
+<p>由于不是纯粹的技术博客，我会写我想记录的一些杂七杂八的东西，去享受记录的快乐：</p>
 <ul>
 <li>论文精读和技术分享</li>
 <li>生活琐事和近期状态</li>
