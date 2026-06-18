@@ -4,7 +4,7 @@ layout: homepage
 
 ## About Me
 
-I am a research assistant at Westlake Univeristy.
+I am a research assistant at the AGI Lab, Westlake Univeristy, advised by Prof.Chi Zhang. I received my M.S. from The University of Hong Kong and B.S. from China University of Geosciences (Wuhan). My research interests lie in **Generative Models**
 
 ## Research Interests
 
